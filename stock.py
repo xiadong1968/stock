@@ -14,7 +14,6 @@ main_layout = [[sg.Text('600606', size=(6, 1), key='--code--'), sg.Text('绿地�
                 sg.Text('-3.5%', size=(8, 1), key='--lscr--'), sg.Text('6.8%', size=(8, 1), key='--lbcr--')],          #lscr:当前价格与最低卖出价格变化百分比
                 [sg.T('当前价', size=(8, 1)), sg.T('涨幅'), sg.T('相对最低卖出'), sg.T('相对最低买入'), sg.Button('展开')]]  #lbcr:当前价格与最低买入价s各变化百分比
 
-
 window = sg.Window('PSG System Dashboard', main_layout,
                    keep_on_top=True,
                    auto_size_buttons=False,
