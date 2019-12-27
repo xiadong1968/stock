@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""股票程序
+"""
+
+
 import PySimpleGUI as sg
 
 sg.change_look_and_feel('Topanga')
