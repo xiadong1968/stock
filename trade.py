@@ -72,13 +72,13 @@ shares = [
 ]
 
 count = 0
+index = 0
+length = len(shares)
 while True:
-    index = 0
-    length = len(shares)
     event, values = window.read(timeout=POLL_FREQUENCY)
     if event == 'Exit':
         break
-    code, security, lastprice = sina.last_price([shares[index % length]])
+    code, security, lastprice = sina.last_price(shares[index % length])
     window['_code_'].update(code)
     window['_security_'].update(security)
     window['_lastprice_'].update(lastprice)
@@ -86,5 +86,6 @@ while True:
     if count % 3 == 0:
         index += 1
     count += 1
+    print(count)
 
 window.close()
