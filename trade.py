@@ -16,8 +16,8 @@ menu_base64 = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gv
 
 main_layout = [
     [
-        sg.Text('600606', size=(6, 1), key='_code_'),
-        sg.Text('绿地控股', key='_security_', size=(8, 1)),
+        sg.Text('', size=(6, 1), key='_code_'),
+        sg.Text('', key='_security_', size=(8, 1)),
         sg.T('  '),
         sg.Text('当前持仓：'),
         sg.Text('3000股', size=(8, 1), key='_hold_'),
@@ -32,7 +32,7 @@ main_layout = [
                   tooltip='关闭窗口')
     ],
     [
-        sg.Text('6.86', size=(8, 1), key='_lastprice_'),
+        sg.Text('', size=(8, 1), key='_lastprice_'),
         sg.Text('2.5%', size=(8, 1), key='_changerate_'),
         sg.Text('-3.5%', size=(8, 1), key='_lscr_', justification='center'),
         sg.Text('6.8%', size=(8, 1), key='_lbcr_', justification='center')
@@ -54,7 +54,7 @@ main_layout = [
     ]
 ]
 
-window = sg.Window('PSG System Dashboard',
+window = sg.Window('股票实时行情',
                    main_layout,
                    keep_on_top=True,
                    auto_size_buttons=False,
@@ -86,6 +86,5 @@ while True:
     if count % 3 == 0:
         index += 1
     count += 1
-    print(count)
 
 window.close()
