@@ -2,6 +2,8 @@
 # _*_ coding: utf_8 _*_
 
 import PySimpleGUI as sg
+from share import SinaSource
+
 sg.set_options(element_padding=(0, 0), margins=(1, 1), border_width=0)
 
 sg.change_look_and_feel('Topanga')
@@ -64,12 +66,25 @@ window = sg.Window('PSG System Dashboard',
                    use_default_focus=False,
                    finalize=True)
 
-price = 6.35
+sina = SinaSource()
+shares = [
+    'sh501029', 'sh510880', 'sh512880', 'sh512000', 'sh600606', 'sh600611'
+]
+
+count = 0
 while True:
+    index = 0
+    length = len(shares)
     event, values = window.read(timeout=POLL_FREQUENCY)
     if event == 'Exit':
         break
-    window['_lastprice_'].update('{:.2f}'.format(price))
-    price += 0.01
+    code, security, lastprice = sina.last_price([shares[index % length]])
+    window['_code_'].update(code)
+    window['_security_'].update(security)
+    window['_lastprice_'].update(lastprice)
+
+    if count % 3 == 0:
+        index += 1
+    count += 1
 
 window.close()

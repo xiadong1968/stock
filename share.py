@@ -1,7 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """该文件定义了股票数据源
 """
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import requests
 import re
@@ -33,23 +35,30 @@ class SinaSource(ShareSource):
         super.__init__(self, url)
     
     def last_price(self, codes):
+        """获取当前股票价格
+        
+        Arguments:
+            codes {[list]} -- [股票代码列表]
+        
+        Returns:
+            [tuple] -- [股票代码，股票名称，当前股价]
+        """
         url = self.url + '/list='
         first = True
         for code in codes:
             url += '' if first else ',' + code
-            first = False 
+            first = False
         try:
             r = requests.get(url, timeout=0.01)
             r.raise_for_status()
         except:
-            return None
+            return '*'*6, '*'*6, '*'*6
         else:
-            p_data = re.Pattern('"[^"]"')
-            p_code = re.Pattern('hq_str_s[hz]([0-9]{6,6})')
+            p_data = re.compile('"([^"]*)"')                      #提取股票数据
+            p_code = re.compile('hq_str_s[hz]([0-9]{6,6})')       #提取股票代码
             try:
-                data = p_data.search(r.text).split(',')
+                data = p_data.search(r.text).group(1).split(',')
                 code = p_code.search(r.text).group(1) 
-
-            
-
-
+                return code, data[0].strip(), data[3].strip)
+            except:
+                return '*'*6, '*'*6, '*'*6
