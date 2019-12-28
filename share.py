@@ -1,4 +1,3 @@
-
 """该文件定义了股票数据源
 """
 
@@ -32,7 +31,7 @@ class SinaSource(ShareSource):
     """新浪数据源
     """
     def __init__(self, url='http://hq.sinajs.cn/'):
-        super.__init__(self, url)
+        ShareSource.__init__(self, url)
     
     def last_price(self, codes):
         """获取当前股票价格
@@ -59,6 +58,6 @@ class SinaSource(ShareSource):
             try:
                 data = p_data.search(r.text).group(1).split(',')
                 code = p_code.search(r.text).group(1) 
-                return code, data[0].strip(), data[3].strip)
+                return code, data[0].strip(), data[3].strip()
             except:
                 return '*'*6, '*'*6, '*'*6
