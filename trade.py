@@ -80,8 +80,8 @@ window = sg.Window('股票实时行情',
                    no_titlebar=True,
                    return_keyboard_events=True,
                    alpha_channel=TRANSPARENCY,
-                   use_default_focus=False,
-                   finalize=True)
+                   use_default_focus=False
+                   )
 
 sina = SinaSource()
 shares = [
@@ -114,7 +114,5 @@ while True:
         poll_time = 0
     else:
         poll_time += POLL_FREQUENCY
-
-
 
 window.close()
