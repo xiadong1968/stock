@@ -8,6 +8,7 @@ import requests
 import re
 import abc
 
+TIME_OUT = 0.1
 
 class ShareSource(metaclass=abc.ABCMeta):
     """数据源抽象类
@@ -48,7 +49,7 @@ class SinaSource(ShareSource):
         url = self.url + 'list=' + code
 
         try:
-            r = requests.get(url, timeout=0.1)
+            r = requests.get(url, timeout=TIME_OUT)
             r.raise_for_status()
         except:
             return '*' * 6, '*' * 6, '*' * 6
