@@ -44,7 +44,7 @@ class SinaSource(ShareSource):
             codes {[string]} -- [股票代码列表]
         
         Returns:
-            [tuple] -- [股票代码，股票名称，当前股价]
+            [tuple] -- [股票代码，股票名称，当前股价, 涨跌幅]
         """
         url = self.url + 'list=' + code
 
@@ -52,13 +52,15 @@ class SinaSource(ShareSource):
             r = requests.get(url, timeout=TIME_OUT)
             r.raise_for_status()
         except:
-            return '*' * 6, '*' * 6, '*' * 6
+            return '*' * 6, '*' * 6, '*' * 6, '*' * 6
         else:
             p_data = re.compile('"([^"]*)"')  #提取股票数据
             p_code = re.compile('hq_str_s[hz]([0-9]{6,6})')  #提取股票代码
             try:
-                data = p_data.search(r.text).group(1).split(',')
-                code = p_code.search(r.text).group(1)
-                return code, data[0].strip(), data[3].strip()
+                data = p_data.search(r.text).group(1).split(',')    #提取新浪股票数据
+                code = p_code.search(r.text).group(1)               #提取股票代码
+                security, preprice, lastprice = data[0].strip(), data[2].strip(), data[3].strip()
+                change_rate = '{:+.2f}'.format((float(lastprice) - float(preprice)) / float(lastprice) * 100)     #计算涨跌幅
+                return code, security, preprice, change_rate
             except:
-                return '*' * 6, '*' * 6, '*' * 6
+                return '*' * 6, '*' * 6, '*' * 6, '*' * 6
